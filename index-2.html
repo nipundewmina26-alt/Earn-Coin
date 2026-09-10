@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EarnCoin LK</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101010;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.logo {
+    font-size: 60px;
+}
+
+h1 span {
+    color: #ffc400;
+}
+
+input, select {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background: #222;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ffc400;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.secondary {
+    background: #292929;
+    color: white;
+}
+
+#register,
+#dashboard,
+#withdrawPage,
+#historyPage,
+#profilePage,
+#referPage {
+    display: none;
+}
+
+.card {
+    background: #1d1d1d;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 15px;
+}
+
+.balance {
+    font-size: 28px;
+    color: #ffc400;
+    font-weight: bold;
+}
+
+.profileItem,
+.historyItem {
+    background: #242424;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.profileItem b {
+    color: #ffc400;
+}
+
+.pending {
+    color: #ffc400;
+    font-weight: bold;
+}
+
+.referralCode {
+    font-size: 25px;
+    color: #ffc400;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 15px 0;
+}
+
+.referralLink {
+    background: #222;
+    padding: 12px;
+    border-radius: 10px;
+    word-break: break-all;
+    font-size: 14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<!-- LOGIN / REGISTER -->
+
+<div id="auth">
+
+    <div class="logo">🪙</div>
+
+    <h1>Earn<span>Coin</span> LK</h1>
+
+    <div id="login">
+
+        <h2>Login</h2>
+
+        <input type="email" placeholder="Email">
+
+        <input type="password" placeholder="Password">
+
+        <button onclick="loginUser()">Login</button>
+
+        <button class="secondary" onclick="showRegister()">
+            Create Account
+        </button>
+
+    </div>
+
+
+    <div id="register">
+
+        <h2>Create Account</h2>
+
+        <input type="text" id="registerUsername" placeholder="Username">
+
+        <input type="email" id="registerEmail" placeholder="Email">
+
+        <input type="password" placeholder="Password">
+
+        <input type="password" placeholder="Confirm Password">
+
+        <button onclick="registerUser()">
+            Create Account
+        </button>
+
+        <button class="secondary" onclick="showLogin()">
+            Back to Login
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+    <div class="logo">🪙</div>
+
+    <h1>Dashboard</h1>
+
+    <div class="card">
+
+        <h2>🪙 Coin Balance</h2>
+
+        <div class="balance" id="coinBalance">
+            0 Coins
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>💵 Estimated Balance</h2>
+
+        <div class="balance" id="estimatedBalance">
+            Rs. 0.00
+        </div>
+
+    </div>
+
+    <button onclick="earnCoins()">
+        🎯 Earn Coins
+    </button>
+
+    <button onclick="withdraw()">
+        💸 Withdraw
+    </button>
+
+    <button onclick="showHistory()">
+        📜 Transaction History
+    </button>
+
+    <button onclick="referEarn()">
+        👥 Refer & Earn
+    </button>
+
+    <button onclick="profile()">
+        👤 Profile
+    </button>
+
+    <button class="secondary" onclick="logout()">
+        🚪 Logout
+    </button>
+
+</div>
+
+
+<!-- WITHDRAW -->
+
+<div id="withdrawPage">
+
+    <div class="logo">💸</div>
+
+    <h1>Withdraw</h1>
+
+    <div class="card">
+
+        <h3>🪙 Current Coins</h3>
+
+        <div class="balance" id="withdrawCoins">
+            0 Coins
+        </div>
+
+        <h3>💵 Available Balance</h3>
+
+        <div class="balance" id="withdrawBalance">
+            Rs. 0.00
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>💰 Withdraw Amount</h3>
+
+        <input
+            type="number"
+            id="withdrawAmount"
+            placeholder="Enter amount (Rs.)"
+            min="1"
+        >
+
+        <h3>💳 Payment Method</h3>
+
+        <select id="paymentMethod">
+
+            <option value="">
+                Select Payment Method
+            </option>
+
+            <option value="Bank Transfer">
+                🏦 Bank Transfer
+            </option>
+
+            <option value="eZ Cash">
+                📱 eZ Cash
+            </option>
+
+            <option value="mCash">
+                📱 mCash
+            </option>
+
+        </select>
+
+        <h3>👤 Account / Wallet Details</h3>
+
+        <input
+            type="text"
+            id="accountDetails"
+            placeholder="Account number / Mobile number"
+        >
+
+        <button onclick="submitWithdraw()">
+            ✅ Submit Withdrawal
+        </button>
+
+        <button class="secondary" onclick="backDashboard()">
+            ← Back to Dashboard
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div id="historyPage">
+
+    <div class="logo">📜</div>
+
+    <h1>Transaction History</h1>
+
+    <div id="historyList"></div>
+
+    <button class="secondary" onclick="backFromHistory()">
+        ← Back to Dashboard
+    </button>
+
+</div>
+
+
+<!-- PROFILE -->
+
+<div id="profilePage">
+
+    <div class="logo">👤</div>
+
+    <h1>My Profile</h1>
+
+    <div class="card">
+
+        <div class="profileItem">
+            👤 <b>Username</b>
+            <br><br>
+            <span id="profileUsername">Not set</span>
+        </div>
+
+        <div class="profileItem">
+            📧 <b>Email</b>
+            <br><br>
+            <span id="profileEmail">Not set</span>
+        </div>
+
+        <div class="profileItem">
+            📱 <b>Mobile Number</b>
+            <br><br>
+            <span id="profileMobile">Not set</span>
+        </div>
+
+        <div class="profileItem">
+            🪙 <b>Coin Balance</b>
+            <br><br>
+            <span id="profileCoins">0 Coins</span>
+        </div>
+
+        <div class="profileItem">
+            💵 <b>Balance</b>
+            <br><br>
+            <span id="profileBalance">Rs. 0.00</span>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>✏️ Edit Profile</h2>
+
+        <input
+            type="text"
+            id="editUsername"
+            placeholder="Username"
+        >
+
+        <input
+            type="email"
+            id="editEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="tel"
+            id="editMobile"
+            placeholder="Mobile Number"
+        >
+
+        <button onclick="saveProfile()">
+            💾 Save Profile
+        </button>
+
+    </div>
+
+    <button class="secondary" onclick="backFromProfile()">
+        ← Back to Dashboard
+    </button>
+
+</div>
+
+
+<!-- REFER & EARN -->
+
+<div id="referPage">
+
+    <div class="logo">👥</div>
+
+    <h1>Refer & Earn</h1>
+
+    <div class="card">
+
+        <h2>🎁 Invite Friends</h2>
+
+        <p>
+            Share your referral code with friends.
+        </p>
+
+        <h3>Your Referral Code</h3>
+
+        <div class="referralCode" id="referralCode">
+            Loading...
+        </div>
+
+        <button onclick="copyReferralCode()">
+            📋 Copy Referral Code
+        </button>
+
+        <button onclick="shareReferral()">
+            📤 Share Referral
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>🔗 Your Referral Link</h3>
+
+        <div class="referralLink" id="referralLink">
+            Loading...
+        </div>
+
+        <button onclick="copyReferralLink()">
+            🔗 Copy Referral Link
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>👥 Your Referrals</h2>
+
+        <div class="balance" id="referralCount">
+            0
+        </div>
+
+        <p>Successful Referrals</p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🪙 Referral Earnings</h2>
+
+        <div class="balance" id="referralEarnings">
+            0 Coins
+        </div>
+
+    </div>
+
+
+    <button class="secondary" onclick="backFromRefer()">
+        ← Back to Dashboard
+    </button>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* LOAD DATA */
+
+let coins =
+    Number(localStorage.getItem("earncoin_coins")) || 0;
+
+let transactions =
+    JSON.parse(localStorage.getItem("earncoin_transactions")) || [];
+
+
+/* PROFILE */
+
+let username =
+    localStorage.getItem("earncoin_username") || "";
+
+let email =
+    localStorage.getItem("earncoin_email") || "";
+
+let mobile =
+    localStorage.getItem("earncoin_mobile") || "";
+
+
+/* REFERRAL */
+
+let referralCode =
+    localStorage.getItem("earncoin_referral_code");
+
+
+let referralCount =
+    Number(localStorage.getItem("earncoin_referral_count")) || 0;
+
+
+let referralEarnings =
+    Number(localStorage.getItem("earncoin_referral_earnings")) || 0;
+
+
+/* CREATE REFERRAL CODE */
+
+if (!referralCode) {
+
+    referralCode =
+        "EARN" +
+        Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase();
+
+    localStorage.setItem(
+        "earncoin_referral_code",
+        referralCode
+    );
+
+}
+
+
+/* SAVE DATA */
+
+function saveData() {
+
+    localStorage.setItem(
+        "earncoin_coins",
+        coins
+    );
+
+    localStorage.setItem(
+        "earncoin_transactions",
+        JSON.stringify(transactions)
+    );
+
+}
+
+
+/* UPDATE BALANCE */
+
+function updateBalance() {
+
+    document.getElementById("coinBalance").innerText =
+        coins + " Coins";
+
+    document.getElementById("estimatedBalance").innerText =
+        "Rs. " + (coins / 100).toFixed(2);
+
+}
+
+
+/* LOGIN */
+
+function loginUser() {
+
+    alert("Login Successful! ✅");
+
+    document.getElementById("auth").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+    updateBalance();
+
+}
+
+
+/* REGISTER */
+
+function registerUser() {
+
+    let name =
+        document.getElementById("registerUsername").value;
+
+    let mail =
+        document.getElementById("registerEmail").value;
+
+
+    if (name === "" || mail === "") {
+
+        alert("⚠️ Please enter Username and Email.");
+
+        return;
+
+    }
+
+
+    username = name;
+
+    email = mail;
+
+
+    localStorage.setItem(
+        "earncoin_username",
+        username
+    );
+
+    localStorage.setItem(
+        "earncoin_email",
+        email
+    );
+
+
+    alert("Account created! ✅");
+
+    document.getElementById("register").style.display = "none";
+
+    document.getElementById("login").style.display = "block";
+
+}
+
+
+/* REGISTER PAGE */
+
+function showRegister() {
+
+    document.getElementById("login").style.display = "none";
+
+    document.getElementById("register").style.display = "block";
+
+}
+
+
+/* LOGIN PAGE */
+
+function showLogin() {
+
+    document.getElementById("register").style.display = "none";
+
+    document.getElementById("login").style.display = "block";
+
+}
+
+
+/* EARN */
+
+function earnCoins() {
+
+    coins = coins + 10;
+
+    saveData();
+
+    updateBalance();
+
+    alert("🎉 You earned 10 coins!");
+
+}
+
+
+/* WITHDRAW */
+
+function withdraw() {
+
+    document.getElementById("dashboard").style.display = "none";
+
+    document.getElementById("withdrawPage").style.display = "block";
+
+    document.getElementById("withdrawCoins").innerText =
+        coins + " Coins";
+
+    document.getElementById("withdrawBalance").innerText =
+        "Rs. " + (coins / 100).toFixed(2);
+
+}
+
+
+/* SUBMIT WITHDRAW */
+
+function submitWithdraw() {
+
+    let amount =
+        Number(document.getElementById("withdrawAmount").value);
+
+    let method =
+        document.getElementById("paymentMethod").value;
+
+    let details =
+        document.getElementById("accountDetails").value;
+
+    let balance = coins / 100;
+
+
+    if (amount <= 0) {
+
+        alert("⚠️ Please enter a valid amount.");
+
+        return;
+
+    }
+
+
+    if (amount > balance) {
+
+        alert("❌ Insufficient balance.");
+
+        return;
+
+    }
+
+
+    if (method === "") {
+
+        alert("⚠️ Please select a payment method.");
+
+        return;
+
+    }
+
+
+    if (details === "") {
+
+        alert("⚠️ Please enter your account/wallet details.");
+
+        return;
+
+    }
+
+
+    transactions.push({
+
+        amount: amount,
+
+        method: method,
+
+        details: details,
+
+        date: new Date().toLocaleString(),
+
+        status: "Pending"
+
+    });
+
+
+    saveData();
+
+    alert("✅ Withdrawal request submitted!");
+
+    document.getElementById("withdrawAmount").value = "";
+
+    document.getElementById("paymentMethod").value = "";
+
+    document.getElementById("accountDetails").value = "";
+
+}
+
+
+/* HISTORY */
+
+function showHistory() {
+
+    document.getElementById("dashboard").style.display = "none";
+
+    document.getElementById("historyPage").style.display = "block";
+
+    displayHistory();
+
+}
+
+
+function displayHistory() {
+
+    let historyList =
+        document.getElementById("historyList");
+
+
+    if (transactions.length === 0) {
+
+        historyList.innerHTML =
+            '<div class="card">📭 No transactions yet.</div>';
+
+        return;
+
+    }
+
+
+    historyList.innerHTML = "";
+
+
+    for (
+        let i = transactions.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        let t = transactions[i];
+
+
+        historyList.innerHTML += `
+
+        <div class="historyItem">
+
+            💸 <b>Withdrawal</b>
+
+            <br><br>
+
+            💰 Amount:
+            Rs. ${t.amount.toFixed(2)}
+
+            <br><br>
+
+            💳 Method:
+            ${t.method}
+
+            <br><br>
+
+            👤 Account:
+            ${t.details}
+
+            <br><br>
+
+            📅 Date:
+            ${t.date}
+
+            <br><br>
+
+            🕐 Status:
+            <span class="pending">
+                ${t.status}
+            </span>
+
+        </div>
+
+        `;
+
+    }
+
+}
+
+
+/* PROFILE */
+
+function profile() {
+
+    document.getElementById("dashboard").style.display = "none";
+
+    document.getElementById("profilePage").style.display = "block";
+
+
+    document.getElementById("profileUsername").innerText =
+        username || "Not set";
+
+    document.getElementById("profileEmail").innerText =
+        email || "Not set";
+
+    document.getElementById("profileMobile").innerText =
+        mobile || "Not set";
+
+    document.getElementById("profileCoins").innerText =
+        coins + " Coins";
+
+    document.getElementById("profileBalance").innerText =
+        "Rs. " + (coins / 100).toFixed(2);
+
+
+    document.getElementById("editUsername").value =
+        username;
+
+    document.getElementById("editEmail").value =
+        email;
+
+    document.getElementById("editMobile").value =
+        mobile;
+
+}
+
+
+/* SAVE PROFILE */
+
+function saveProfile() {
+
+    username =
+        document.getElementById("editUsername").value;
+
+    email =
+        document.getElementById("editEmail").value;
+
+    mobile =
+        document.getElementById("editMobile").value;
+
+
+    if (username === "" || email === "") {
+
+        alert("⚠️ Username and Email are required.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "earncoin_username",
+        username
+    );
+
+    localStorage.setItem(
+        "earncoin_email",
+        email
+    );
+
+    localStorage.setItem(
+        "earncoin_mobile",
+        mobile
+    );
+
+
+    alert("✅ Profile saved!");
+
+    profile();
+
+}
+
+
+/* BACK PROFILE */
+
+function backFromProfile() {
+
+    document.getElementById("profilePage").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+    updateBalance();
+
+}
+
+
+/* REFER */
+
+function referEarn() {
+
+    document.getElementById("dashboard").style.display = "none";
+
+    document.getElementById("referPage").style.display = "block";
+
+
+    document.getElementById("referralCode").innerText =
+        referralCode;
+
+
+    let link =
+        window.location.href.split("?")[0]
+        + "?ref="
+        + referralCode;
+
+
+    document.getElementById("referralLink").innerText =
+        link;
+
+
+    document.getElementById("referralCount").innerText =
+        referralCount;
+
+
+    document.getElementById("referralEarnings").innerText =
+        referralEarnings + " Coins";
+
+}
+
+
+/* COPY CODE */
+
+function copyReferralCode() {
+
+    navigator.clipboard.writeText(referralCode);
+
+    alert("✅ Referral code copied!");
+
+}
+
+
+/* COPY LINK */
+
+function copyReferralLink() {
+
+    let link =
+        window.location.href.split("?")[0]
+        + "?ref="
+        + referralCode;
+
+
+    navigator.clipboard.writeText(link);
+
+    alert("✅ Referral link copied!");
+
+}
+
+
+/* SHARE */
+
+function shareReferral() {
+
+    let link =
+        window.location.href.split("?")[0]
+        + "?ref="
+        + referralCode;
+
+
+    if (navigator.share) {
+
+        navigator.share({
+
+            title: "EarnCoin LK",
+
+            text:
+                "Join EarnCoin LK using my referral link!",
+
+            url: link
+
+        });
+
+    } else {
+
+        navigator.clipboard.writeText(link);
+
+        alert("✅ Referral link copied!");
+
+    }
+
+}
+
+
+/* BACK REFER */
+
+function backFromRefer() {
+
+    document.getElementById("referPage").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+}
+
+
+/* BACK HISTORY */
+
+function backFromHistory() {
+
+    document.getElementById("historyPage").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+}
+
+
+/* BACK DASHBOARD */
+
+function backDashboard() {
+
+    document.getElementById("withdrawPage").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    document.getElementById("dashboard").style.display = "none";
+
+    document.getElementById("auth").style.display = "block";
+
+    showLogin();
+
+    alert("🚪 Logged out!");
+
+}
+
+</script>
+
+</body>
+</html>
